@@ -5,6 +5,17 @@
 /.pnp
 .pnp.js
 
+# Ignore node_modules in client folder
+client/node_modules
+server/node_modules
+
+# Ignore package-lock.json in client folder
+client/package-lock.json
+server/package-lock.json
+
+# Ignore .env file
+server/.env
+
 # testing
 /coverage
 

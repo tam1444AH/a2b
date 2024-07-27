@@ -1,0 +1,36 @@
+.hotel-card {
+    margin: 1rem;
+    padding: 0rem;
+    border: 0px hidden #ddd;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgb(100, 100, 100);
+    color: white;
+    overflow: hidden; /* Ensure the rounded corners apply to all content */
+}
+
+.hotel-card .card-header {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.headerH {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.subtitle {
+    color: white;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button {
+    flex: 1;
+    margin: 0 0.5rem;
+}

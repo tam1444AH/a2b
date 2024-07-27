@@ -1,0 +1,18 @@
+.navbar {
+    list-style-type: none;
+    /* margin: 0; */
+    /* padding: 10; */
+    overflow: hidden;
+    background-color: red;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    /* margin-bottom: 20px; */
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    z-index: 10;
+    height: 56px;
+    padding: 0;
+    margin-bottom: 0;
+  }

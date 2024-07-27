@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.outer-containerP {
+    margin-top: 56px;
+    height: 889px;
+    background: black;
+}
+
+.welcome-containerP {
+    color: white;
+    padding: 20px;
+}
+
+.flight-containerP, .hotel-containerP {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.flight-containerP {
+    height: 350px;
+    background: rgb(0, 0, 0);
+    overflow: hidden; /* Hide any overflow content */
+}
+
+.hotel-containerP {
+    height: 350px;
+    background: rgb(0, 0, 0);
+    overflow: hidden; /* Hide any overflow content */
+}
+
+.empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 250px;
+    justify-content: center;
+}
+
+
+.flights-table, .hotels-table {
+    width: 100%;
+    table-layout: fixed; 
+}
+
+.table-container {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.flights-table thead, .hotels-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #343a40;
+}
+
+.flights-table tbody tr, .hotels-table tbody tr {
+    display: table-row;
+}
+
+.flights-table thead th, .hotels-table thead th, .flights-table tbody td, .hotels-table tbody td {
+    width: auto; /* Let columns adjust based on content */
+    padding: 8px; 
+}
