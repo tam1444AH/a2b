@@ -218,6 +218,68 @@ A2B
 });
 
 
+app.post('/bookhotel', verifyToken, async (req, res) => {
+    
+    const { hotel, numNights, startDate, totalCost } = req.body;
+    const userId = req.userId;
+    
+    
+    try {
+        
+        const bookingId = '123456'; 
+       
+        const [userResult] = await db.query('SELECT email, name FROM users WHERE user_id = ?', [userId]);
+        if (userResult.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const userEmail = userResult[0].email;
+        const userName = userResult[0].name;
+        
+
+        
+        const mailOptions = {
+            from: process.env.EMAIL_USER, 
+            to: userEmail, 
+            subject: 'Hotel Booking Confirmation', 
+            text: `Dear ${userName},
+
+Thank you for booking with us. Your hotel booking details are as follows:
+
+- Hotel: ${hotel.hotel_name}
+- Rating: ${hotel.rating}
+- Country Code: ${hotel.country_code}
+- Distance from local airport (in miles): ${hotel.distance_from_airport}
+- Local airport IATA code: ${hotel.airport_iata_code}
+- Start date: ${startDate}
+- Number of nights: ${numNights}
+- Total cost: ${totalCost}
+
+Booking ID: ${bookingId}
+
+Please keep this information for your records.
+
+Best regards,
+A2B
+`, 
+        };
+
+        
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log('Error sending email:', error);
+                return res.status(500).json({ message: 'Error sending confirmation email' });
+            }
+            console.log('Email sent:', info.response);
+            res.json({ message: 'Hotel booking confirmed, confirmation email sent.' });
+        });
+
+    } catch (error) {
+        console.error('Error processing hotel booking:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
 app.post('/signup', async (req, res) => {
     try {
         const { Name, Email, Address, Phone, Password } = req.body;
@@ -283,6 +345,21 @@ app.get('/savedflights/:user_id', verifyToken, async (req, res) => {
     }
 }); 
 
+app.post('/savedflights', verifyToken, async (req, res) => {
+    const { airline, flight_number, departure_airport_iata, arrival_airport_iata, flight_date, status, arrival_time, departure_time } = req.body;
+    const userId = req.userId;
+
+    try {
+        const [result] = await db.query('INSERT INTO saved_flights (user_id, airline, flight_number, departure_airport_iata, arrival_airport_iata, flight_date, status, arrival_time, departure_time) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        [userId, airline, flight_number, departure_airport_iata, arrival_airport_iata, flight_date, status, arrival_time, departure_time]);
+        
+        res.status(201).json({ message: 'Flight saved successfully', savedFlightId: result.insertId });
+    } catch (error) {
+        console.error('Error saving flight:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.get('/savedhotels/:user_id', verifyToken, async (req, res) => {
     const userId = req.params.user_id;
     try {
@@ -290,6 +367,21 @@ app.get('/savedhotels/:user_id', verifyToken, async (req, res) => {
         res.json(rows);
     } catch (error) {
         console.error('Error fetching saved hotels:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/savedhotels', verifyToken, async (req, res) => {
+    const { hotel_id, hotel_name, rating, country_code, distance_from_airport, airport_iata_code } = req.body;
+    const userId = req.userId;
+
+    try {
+        const [result] = await db.query('INSERT INTO saved_hotels (hotel_id, user_id, hotel_name, rating, country_code, distance_from_airport, airport_iata_code) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        [hotel_id, userId, hotel_name, rating, country_code, distance_from_airport, airport_iata_code]);
+
+        res.status(201).json({ message: 'Hotel saved successfully', savedHotelId: result.insertId });
+    } catch (error) {
+        console.error('Error saving hotel:', error.message);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
@@ -308,7 +400,7 @@ app.delete('/deleteflight/:flight_id', verifyToken, async (req, res) => {
 app.delete('/deletehotel/:hotel_id', verifyToken, async (req, res) => {
     const hotelId = req.params.hotel_id;
     try {
-        await db.query('DELETE FROM saved_hotels WHERE id = ?', [hotelId]);
+        await db.query('DELETE FROM saved_hotels WHERE hotel_id = ?', [hotelId]);
         res.status(204).send(); 
     } catch (error) {
         console.error('Error deleting hotel:', error.message);

@@ -7,15 +7,22 @@ import { IoCloudOutline } from 'react-icons/io5';
 import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function Profile() {
 
     const [flights, setFlights] = useState([]);
     const [hotels, setHotels] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [showModalHotel, setShowModalHotel] = useState(false);
     const [selectedFlight, setSelectedFlight] = useState(null);
+    const [selectedHotel, setSelectedHotel] = useState(null);
+    const [numNights, setNumNights] = useState(1);
     const [numTickets, setNumTickets] = useState(1);
     const [cardInfo, setCardInfo] = useState('');
+    const [cardExpDate, setCardExpDate] = useState('');
+    const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate();
     const name = localStorage.getItem('userName');
 
@@ -91,30 +98,85 @@ function Profile() {
 
         const userId = localStorage.getItem('userId');
 
+        const totalCost = numTickets * 100;
+
         const bookingDetails = {
             flight: selectedFlight,
             numTickets,
             cardInfo,
+            totalCost
         };
 
-        
-        const token = localStorage.getItem('token');
+        // Check if form is valid
+        if (document.getElementById('flightBookingForm').checkValidity()) {
+            const token = localStorage.getItem('token');
     
-        axios.post('http://localhost:3001/bookflight', bookingDetails, {
+            axios.post('http://localhost:3001/bookflight', bookingDetails, {
             headers: {
-                'Authorization': token
-            }
-        })
-        .then(response => {
-            console.log('Booking confirmed:', response.data);
-            alert('Booking confirmed! Check your email for details.');
-        })
-        .catch(error => {
-            console.error('Error booking flight:', error);
-            alert('Failed to book flight. Please try again.');
-        });
+                Authorization: token,
+            },
+            })
+            .then((response) => {
+                console.log('Booking confirmed:', response.data);
+                alert('Booking confirmed! Check your email for details.');
+            })
+            .catch((error) => {
+                console.error('Error booking flight:', error);
+                alert('Failed to book flight. Please try again.');
+            });
     
-        handleCloseModal();
+            handleCloseModal();
+        } else {
+            alert('Please fill out the form correctly.');
+        }
+    };
+
+
+    const handleBookHotelClick = (hotel) => {
+        setSelectedHotel(hotel);
+        setShowModalHotel(true);
+    };
+
+    const handleCloseModalHotel = () => {
+        setShowModalHotel(false);
+        setSelectedHotel(null);
+    };
+
+    const handleBookHotel = () => {
+        const userId = localStorage.getItem('userId');
+        const totalCost = numNights * 100;
+
+        const bookingDetails = {
+            hotel: selectedHotel,
+            numNights,
+            cardInfo,
+            cardExpDate,
+            startDate,
+            totalCost
+        };
+
+        // Check if form is valid
+        if (document.getElementById('hotelBookingForm').checkValidity()) {
+            const token = localStorage.getItem('token');
+    
+            axios.post('http://localhost:3001/bookhotel', bookingDetails, {
+            headers: {
+                Authorization: token,
+            },
+            })
+            .then((response) => {
+                console.log('Hotel booking confirmed:', response.data);
+                alert('Hotel booking confirmed! Check your email for details.');
+            })
+            .catch((error) => {
+                console.error('Error booking hotel:', error);
+                alert('Failed to book hotel. Please try again.');
+            });
+    
+            handleCloseModalHotel();
+        } else {
+            alert('Please fill out the form correctly.');
+        }
     };
 
 
@@ -139,8 +201,8 @@ function Profile() {
                                     <th>Arrival Airport IATA</th>
                                     <th>Flight Date</th>
                                     <th>Status</th>
-                                    <th>Arrival Time</th>
-                                    <th>Departure Time</th>
+                                    <th>Departure Time(Dep. local time)</th>
+                                    <th>Arrival Time(Dep. local time)</th>
                                     <th>Book</th>
                                     <th>Delete</th>
                                 </tr>
@@ -155,8 +217,8 @@ function Profile() {
                                             <td>{flight.arrival_airport_iata}</td>
                                             <td>{flight.flight_date}</td>
                                             <td>{flight.status}</td>
-                                            <td>{flight.arrival_time}</td>
                                             <td>{flight.departure_time}</td>
+                                            <td>{flight.arrival_time}</td>
                                             <td>
                                                 <Button variant="primary" onClick={() => handleBookClick(flight)}>Book</Button>
                                             </td>
@@ -196,15 +258,15 @@ function Profile() {
                             </thead>
                             <tbody className='table-body'>
                                 {hotels.length > 0 ? (
-                                        flights.map(hotel => (
-                                            <tr key={hotel.name}>
-                                                <td>{hotel.name}</td>
+                                        hotels.map(hotel => (
+                                            <tr key={hotel.hotel_name}>
+                                                <td>{hotel.hotel_name}</td>
                                                 <td>{hotel.rating}</td>
                                                 <td>{hotel.country_code}</td>
                                                 <td>{hotel.distance_from_airport}</td>
                                                 <td>{hotel.airport_iata_code}</td>
                                                 <td>
-                                                    <Button variant="primary">Book</Button>
+                                                    <Button variant="primary" onClick={() => handleBookHotelClick(hotel)}>Book</Button>
                                                 </td>
                                                 <td>
                                                     <Button variant="danger" onClick={() => handleDeleteHotel(hotel.hotel_id)}>Delete</Button>
@@ -232,27 +294,46 @@ function Profile() {
                     <Modal.Title>Book Flight</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form id="flightBookingForm">
                         <Form.Group controlId="formTickets">
-                            <Form.Label>Number of Tickets</Form.Label>
+                            <Form.Label>Number of Tickets ($100 dollar per ticket)</Form.Label>
                             <Form.Control
                                 type="number"
                                 value={numTickets}
                                 onChange={(e) => setNumTickets(e.target.value)}
                                 min="1"
                                 max="10"
+                                required
                             />
                         </Form.Group>
 
                         <Form.Group controlId="formCardInfo" className="mt-3">
-                            <Form.Label>Card Information</Form.Label>
+                            <Form.Label>Card Number:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Card Number"
                                 value={cardInfo}
                                 onChange={(e) => setCardInfo(e.target.value)}
+                                required
                             />
                         </Form.Group>
+
+                        <Form.Group controlId="formCardExpDate" className="mt-3">
+                            <Form.Label>Expiration Date:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="MM/YY"
+                                value={cardExpDate}
+                                onChange={(e) => setCardExpDate(e.target.value)}
+                                pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+                                title="Please enter a valid expiration date in MM/YY format."
+                                required
+                            />
+                        </Form.Group>
+
+                        <div className="mt-3">
+                            <p>Total Cost: ${numTickets * 100}</p>
+                        </div>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -260,6 +341,75 @@ function Profile() {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleBookFlight}>
+                        Book Now
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={showModalHotel} onHide={handleCloseModalHotel}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Book Hotel</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form id="hotelBookingForm">
+                        <Form.Group controlId="formNights">
+                            <Form.Label>Number of Nights ($100 per night)</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={numNights}
+                                onChange={(e) => setNumNights(e.target.value)}
+                                min="1"
+                                max="30"
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formCardInfo" className="mt-3">
+                            <Form.Label>Card Number:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Card Number"
+                                value={cardInfo}
+                                onChange={(e) => setCardInfo(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formCardExpDate" className="mt-3">
+                            <Form.Label>Expiration Date:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="MM/YY"
+                                value={cardExpDate}
+                                onChange={(e) => setCardExpDate(e.target.value)}
+                                pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
+                                title="Please enter a valid expiration date in MM/YY format."
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="formStartDate" className="mt-3">
+                            <Form.Label>Start Date:</Form.Label>
+                            <br/>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                minDate={new Date()}
+                                className="form-control"
+                                required
+                            />
+                        </Form.Group>
+
+                        <div className="mt-3">
+                            <p>Total Cost: ${numNights * 100}</p>
+                        </div>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModalHotel}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleBookHotel}>
                         Book Now
                     </Button>
                 </Modal.Footer>
