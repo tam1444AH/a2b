@@ -89,22 +89,22 @@ app.get('/flights/:from-:to', async (req, res) => {
     const from = req.params.from.toUpperCase();
     const to = req.params.to.toUpperCase();
 
-    res.json(flightsArr);
+    // res.json(flightsArr);
 
-    // try {
-    //     const response = await axios.get(`http://api.aviationstack.com/v1/flights`, {
-    //         params: {
-    //             access_key: process.env.API_ACCESS_KEY,
-    //             dep_iata: from,
-    //             arr_iata: to,
-    //         }
-    //     });
+    try {
+        const response = await axios.get(`http://api.aviationstack.com/v1/flights`, {
+            params: {
+                access_key: process.env.API_ACCESS_KEY,
+                dep_iata: from,
+                arr_iata: to,
+            }
+        });
 
-    //     res.json(response.data.data);
-    // } catch (error) {
-    //     console.error('Error fetching flights:', error);
-    //     res.status(500).json({ error: 'Error fetching flights' });
-    // }
+        res.json(response.data.data);
+    } catch (error) {
+        console.error('Error fetching flights:', error);
+        res.status(500).json({ error: 'Error fetching flights' });
+    }
 });
 
 
@@ -134,32 +134,32 @@ app.get('/hotels/:to-:dist-:stars', async (req, res) => {
     const dist = req.params.dist;
     const stars = req.params.stars;
 
-    res.json(hotelsArr);
+    // res.json(hotelsArr);
 
-    // try {
-    //     const accessToken = await getAccessToken();
-    //     const response = await axios.get('https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city', {
-    //         headers: {
-    //             'Authorization': `Bearer ${accessToken}`
-    //         },
-    //         params: {
-    //             cityCode: to,
-    //             radius: dist,
-    //             radiusUnit: 'MILE',
-    //             ratings: stars,
-    //             hotelSource: 'ALL'
-    //         }
-    //     });
-    //     res.json(response.data.data);
-    // } catch (error) {
-    //     console.error('Error fetching hotels:', error.response ? error.response.data : error.message);
-    //     res.status(500).json({ error: 'Error fetching hotels' });
-    // }
+    try {
+        const accessToken = await getAccessToken();
+        const response = await axios.get('https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city', {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            },
+            params: {
+                cityCode: to,
+                radius: dist,
+                radiusUnit: 'MILE',
+                ratings: stars,
+                hotelSource: 'ALL'
+            }
+        });
+        res.json(response.data.data);
+    } catch (error) {
+        console.error('Error fetching hotels:', error.response ? error.response.data : error.message);
+        res.status(500).json({ error: 'Error fetching hotels' });
+    }
 });
 
 app.post('/bookflight', verifyToken, async (req, res) => {
     
-    const { flight, numTickets, cardInfo } = req.body;
+    const { flight, numTickets, totalCost } = req.body;
     const userId = req.userId;
     
     
@@ -184,13 +184,15 @@ app.post('/bookflight', verifyToken, async (req, res) => {
 
 Thank you for booking with us. Your booking details are as follows:
 
-- Flight: ${flight.airline} ${flight.flight_number}
+- Airline: ${flight.airline}
+- Flight: ${flight.flight_number}
 - Departure: ${flight.departure_airport_iata}
 - Arrival: ${flight.arrival_airport_iata}
 - Date: ${flight.flight_date}
 - Departure time: ${flight.departure_time}
 - Arrival time: ${flight.arrival_time}
 - Number of Tickets: ${numTickets}
+- Total cost: $${totalCost}
 
 Booking ID: ${bookingId}
 
@@ -250,7 +252,7 @@ Thank you for booking with us. Your hotel booking details are as follows:
 - Country Code: ${hotel.country_code}
 - Distance from local airport (in miles): ${hotel.distance_from_airport}
 - Local airport IATA code: ${hotel.airport_iata_code}
-- Start date: ${startDate}
+- Start date:  ${new Date(startDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
 - Number of nights: ${numNights}
 - Total cost: ${totalCost}
 
@@ -349,8 +351,9 @@ app.post('/savedflights', verifyToken, async (req, res) => {
     const { airline, flight_number, departure_airport_iata, arrival_airport_iata, flight_date, status, arrival_time, departure_time } = req.body;
     const userId = req.userId;
 
+
     try {
-        const [result] = await db.query('INSERT INTO saved_flights (user_id, airline, flight_number, departure_airport_iata, arrival_airport_iata, flight_date, status, arrival_time, departure_time) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        const [result] = await db.query('INSERT INTO saved_flights (user_id, airline, flight_number, departure_airport_iata, arrival_airport_iata, flight_date, status, arrival_time, departure_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
         [userId, airline, flight_number, departure_airport_iata, arrival_airport_iata, flight_date, status, arrival_time, departure_time]);
         
         res.status(201).json({ message: 'Flight saved successfully', savedFlightId: result.insertId });

@@ -80,14 +80,24 @@ function HotelCard({ hotel }) {
         
         const totalCost = numNights * 100;
 
+        const bookedHotel = {
+            hotel_id: hotel.dupeId,
+            user_id: userId,
+            hotel_name: hotel.name,
+            rating: hotel.rating,
+            country_code: hotel.address.countryCode,
+            distance_from_airport: hotel.distance.value,
+            airport_iata_code: hotel.iataCode
+        }
+
         const bookingDetails = {
-            hotel,
+            hotel: bookedHotel,
             numNights,
-            cardInfo,
-            cardExpDate,
             startDate,
             totalCost
         };
+
+        
 
         if (document.getElementById('hotelBookingForm').checkValidity()) {
             axios.post('http://localhost:3001/bookhotel', bookingDetails, {

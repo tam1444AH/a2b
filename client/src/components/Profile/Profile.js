@@ -201,8 +201,8 @@ function Profile() {
                                     <th>Arrival Airport IATA</th>
                                     <th>Flight Date</th>
                                     <th>Status</th>
-                                    <th>Departure Time(Dep. local time)</th>
-                                    <th>Arrival Time(Dep. local time)</th>
+                                    <th>Departure Time</th>
+                                    <th>Arrival Time</th>
                                     <th>Book</th>
                                     <th>Delete</th>
                                 </tr>

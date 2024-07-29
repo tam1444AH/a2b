@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { IoAirplaneSharp } from "react-icons/io5";
 import './FlightCard.css'
 import { airports } from '../../airports';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
+
 
 function FlightCard({flight}) {
   const [showModal, setShowModal] = useState(false);
@@ -49,14 +55,14 @@ function FlightCard({flight}) {
     };
 
     if (userId && token) {
-      axios.post(`http://localhost:3001/savedflights`, savedHotel, {
+      axios.post(`http://localhost:3001/savedflights`, savedFlight, {
         headers: { 'Authorization': token }
       })
       .then(response => {
         console.log('Flight saved:', response.data);
         setIsSaved(true);
         setIsSaving(false);
-        alert('Hotel saved successfully!');
+        alert('Flight saved successfully!');
       })
       .catch(error => {
         console.error('Error saving flight:', error);
@@ -85,15 +91,26 @@ function FlightCard({flight}) {
 
     if (!userId || !token) {
       alert('You need to be logged in to book a flight');
+      setIsBooking(false);
       return;
     }
 
     const totalCost = numTickets * 100;
 
+    const bookedFlight = {
+      airline: flight.airline.name,
+      flight_number: flight.flight.iata,
+      departure_airport_iata: flight.departure.iata,
+      arrival_airport_iata: flight.arrival.iata,
+      flight_date: flight.flight_date,
+      status: flight.flight_status,
+      arrival_time: flight.arrival.scheduled,
+      departure_time: flight.departure.scheduled
+    };
+
     const bookingDetails = {
-      flight,
+      flight: bookedFlight,
       numTickets,
-      cardInfo,
       totalCost
     };
 
@@ -126,6 +143,8 @@ function FlightCard({flight}) {
 
   };
 
+  
+
   return (
     <>
       <Card className='mb-3 flight-card' text='light' border='dark'>
@@ -136,19 +155,22 @@ function FlightCard({flight}) {
                 <Card.Title>A</Card.Title>
                 <Card.Text>
                   Departure: {flight.departure.airport} ({flight.departure.iata}),<br/>
-                  {departureCity}, {departureCountry}
+                  {departureCity}, {departureCountry}, <br/>
+                  Departure Time: {flight.departure.scheduled}
                 </Card.Text>
               </div>
 
               <div>
-                Date: {flight.flight_date} <IoAirplaneSharp className='plane-icon'/> Status: {flight.flight_status}
+                Date: {flight.flight_date} <IoAirplaneSharp className='plane-icon'/> Status: {flight.flight_status} <br/>
+                <center><p className="small-text">(local airport times in 24hr time)</p></center>
               </div>
 
               <div className='flight-section right-section'>
                 <Card.Title>B</Card.Title>
                 <Card.Text>
                   Arrival: {flight.arrival.airport} ({flight.arrival.iata}), <br/>
-                  {arrivalCity}, {arrivalCountry}
+                  {arrivalCity}, {arrivalCountry}, <br/>
+                  Arrival Time: {flight.arrival.scheduled}
                 </Card.Text>
               </div>
               
@@ -179,7 +201,7 @@ function FlightCard({flight}) {
                     <Modal.Title>Book Flight</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form id="flightBookingForm">
+                    <Form id="flightBookingForm" className="modal-form">
                         <Form.Group controlId="formTickets">
                             <Form.Label>Number of Tickets ($100 dollar per ticket)</Form.Label>
                             <Form.Control

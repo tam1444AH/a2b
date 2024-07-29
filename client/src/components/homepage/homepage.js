@@ -12,6 +12,9 @@ function Homepage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
+  // const userId = localStorage.getItem('userId');
+  // const token = localStorage.getItem('token');
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;

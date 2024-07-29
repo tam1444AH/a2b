@@ -59,3 +59,19 @@
     background-color: black;
     color: white;
 }
+
+/* Style for the modal background */
+.modal-content {
+    background-color: rgb(169, 169, 169); /* Light gray color */
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+    background-color: rgb(169, 169, 169); /* Light gray color */
+}
+
+
+.small-text {
+    font-size: smaller;
+}
