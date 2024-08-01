@@ -6,6 +6,7 @@ const mysql = require('mysql2/promise');
 const jwt = require('jsonwebtoken');
 require('dotenv').config(); 
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 
 const transporter = nodemailer.createTransport({
@@ -62,6 +63,14 @@ const db = mysql.createPool({
 app.use(cors());
 app.use(express.json()); 
 
+
+
+const _dirname = path.dirname("");
+const buildPath = path.join(_dirname  , "../client/build");
+
+app.use(express.static(buildPath));
+
+
 let moduleF = require('../client/src/flights.js');
 let flightsArr = moduleF.flights;
 
@@ -85,9 +94,11 @@ const verifyToken = (req, res, next) => {
     });
 };
 
+
 app.get('/flights/:from-:to', async (req, res) => {
-    const from = req.params.from.toUpperCase();
-    const to = req.params.to.toUpperCase();
+
+    const from = req.params.from.trim().toUpperCase();
+    const to = req.params.to.trim().toUpperCase();
 
     // res.json(flightsArr);
 
@@ -99,9 +110,9 @@ app.get('/flights/:from-:to', async (req, res) => {
                 arr_iata: to,
             }
         });
-
+        
         res.json(response.data.data);
-    } catch (error) {
+    } catch (error) {       
         console.error('Error fetching flights:', error);
         res.status(500).json({ error: 'Error fetching flights' });
     }
@@ -319,6 +330,7 @@ app.get('/checkEmail/:email', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
+    
     try {
         const { Email, Password } = req.body;
         const [result] = await db.query('SELECT * FROM users WHERE email = ? AND password = ?', [Email, Password]);
@@ -409,6 +421,22 @@ app.delete('/deletehotel/:hotel_id', verifyToken, async (req, res) => {
         console.error('Error deleting hotel:', error.message);
         res.status(500).json({ error: 'Internal Server Error' });
     }
+});
+
+app.get("/*", function(req, res){
+    
+    
+    res.sendFile(
+        path.join(__dirname, "../client/build/index.html"),
+        function (err) {
+          if (err) {
+
+            res.status(500).send(err);
+            
+          }
+        }
+      );
+
 });
 
 

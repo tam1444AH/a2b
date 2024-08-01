@@ -2,6 +2,8 @@
   "name": "a2b",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
+  "homepage": ".",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
