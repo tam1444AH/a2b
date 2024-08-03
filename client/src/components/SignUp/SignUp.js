@@ -12,7 +12,7 @@ export default function SignUp({ setAuth }) {
 
   const checkEmailExists = async (email) => {
     try {
-      const response = await fetch(`http://3.14.142.122/checkEmail/${email}`);
+      const response = await fetch(`http://3.144.42.63/checkEmail/${email}`);
       const data = await response.json();
       return data.exists;
     } catch (error) {
@@ -35,7 +35,7 @@ export default function SignUp({ setAuth }) {
         return;
       }
 
-      const response = await axios.post(`http://3.14.142.122/signup`, {
+      const response = await axios.post(`http://3.144.42.63/signup`, {
         Name: Name.value,
         Email: Email.value,
         Address: Address.value,

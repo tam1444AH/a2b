@@ -30,7 +30,7 @@ function Homepage() {
     }
 
     try {
-      const response = await axios.get(`http://3.14.142.122/flights/${departureIATA}-${arrivalIATA}`);
+      const response = await axios.get(`http://3.144.42.63/flights/${departureIATA}-${arrivalIATA}`);
       const foundFlights = response.data;
       setFlightsFound(foundFlights);
       console.log(foundFlights);
