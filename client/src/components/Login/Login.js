@@ -17,7 +17,7 @@ export default function Login({ setAuth }) {
         const { Email, Password } = event.target.elements;
 
         try {
-            const response = await axios.post(`http://localhost:3001/login`, {
+            const response = await axios.post(`http://3.14.142.122/login`, {
                 Email: Email.value,
                 Password: Password.value
             });

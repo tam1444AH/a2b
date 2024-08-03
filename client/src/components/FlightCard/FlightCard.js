@@ -55,7 +55,7 @@ function FlightCard({flight}) {
     };
 
     if (userId && token) {
-      axios.post(`http://localhost:3001/savedflights`, savedFlight, {
+      axios.post(`http://3.14.142.122/savedflights`, savedFlight, {
         headers: { 'Authorization': token }
       })
       .then(response => {
@@ -118,7 +118,7 @@ function FlightCard({flight}) {
     if (document.getElementById('flightBookingForm').checkValidity()) {
       const token = localStorage.getItem('token');
 
-      axios.post('http://localhost:3001/bookflight', bookingDetails, {
+      axios.post('http://3.14.142.122/bookflight', bookingDetails, {
       headers: {
           Authorization: token,
       },

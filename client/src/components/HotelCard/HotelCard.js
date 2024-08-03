@@ -39,7 +39,7 @@ function HotelCard({ hotel }) {
         };
 
         if (userId && token) {
-            axios.post(`http://localhost:3001/savedhotels`, savedHotel, {
+            axios.post(`http://3.14.142.122/savedhotels`, savedHotel, {
                 headers: { 'Authorization': token }
             })
             .then(response => {
@@ -100,7 +100,7 @@ function HotelCard({ hotel }) {
         
 
         if (document.getElementById('hotelBookingForm').checkValidity()) {
-            axios.post('http://localhost:3001/bookhotel', bookingDetails, {
+            axios.post('http://3.14.142.122/bookhotel', bookingDetails, {
                 headers: { Authorization: token },
             })
             .then((response) => {

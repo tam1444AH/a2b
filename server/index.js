@@ -9,6 +9,14 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 
 
+const corsOptions = {
+    origin: 'http://3.14.142.122', 
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
+
 const transporter = nodemailer.createTransport({
     service: 'Gmail', 
     auth: {
@@ -60,7 +68,7 @@ const db = mysql.createPool({
     }
 })();
 
-app.use(cors());
+
 app.use(express.json()); 
 
 

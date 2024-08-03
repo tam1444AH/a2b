@@ -15,6 +15,7 @@ function Homepage() {
   // const userId = localStorage.getItem('userId');
   // const token = localStorage.getItem('token');
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -29,7 +30,7 @@ function Homepage() {
     }
 
     try {
-      const response = await axios.get(`http://localhost:3001/flights/${departureIATA}-${arrivalIATA}`);
+      const response = await axios.get(`http://3.14.142.122/flights/${departureIATA}-${arrivalIATA}`);
       const foundFlights = response.data;
       setFlightsFound(foundFlights);
       console.log(foundFlights);
