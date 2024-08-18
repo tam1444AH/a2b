@@ -10,7 +10,7 @@ const path = require('path');
 
 
 const corsOptions = {
-    origin: 'http://3.144.42.63', 
+    origin: 'http://18.225.56.57', 
     optionsSuccessStatus: 200,
 };
 
