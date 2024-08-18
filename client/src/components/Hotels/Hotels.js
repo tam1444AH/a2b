@@ -23,7 +23,7 @@ function Hotels() {
     console.log('Form submitted successfully:', { IATA, dist, rating });
     // Perform the form submission logic here
     try {
-      const response = await axios.get(`http://18.225.56.57/hotels/${IATA}-${dist}-${rating}`);
+      const response = await axios.get(`http://3.128.170.201/hotels/${IATA}-${dist}-${rating}`);
       const foundHotels = response.data;
       console.log(foundHotels);
       setHotelsFound(foundHotels);
