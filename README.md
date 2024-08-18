@@ -1,70 +1,12 @@
-# Getting Started with Create React App
+# A2B Travel App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web application where users can search for flights and hotels. They can also book or save any flight/hotel of their choosing.
 
-## Available Scripts
+# Accessing the website
 
-In the project directory, you can run:
+The A2B travel app can be accessed via the [A2B Website](http://3.144.42.63/)
 
-### `npm start`
+# Usage Instructions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+You can create an account with a valid email to save/book a flight/hotel you choose. You can still search for flights even without an account. To search for a flight simply input your departure airport's IATA code, and input your arrival airport's IATA code, you will then 
+be greeted by several flights that match your preferences, you may save or book any of these flights. You must be logged in to access the save/book feature in our web application. If you save a flight/hotel you will be able to view it in your profile. You may also delete or book a saved flight in your profile. To search for hotels simply navigate over to the 'Hotels' page by clicking the button on the navigation bar (you must be logged in to see your profile/search for hotels). Once there, input the IATA code of your arrival airport then set the radius of how far you want the hotel to be from the airport (in miles). Then select a rating for the hotel, once you hit submit you will be greeted by several hotels with their relevant details, that you may book or save to your profile. If you book a flight/hotel, a confirmation email with the booking details will be sent to you for your convenience. Enjoy! 
