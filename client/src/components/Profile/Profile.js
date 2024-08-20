@@ -36,7 +36,7 @@ function Profile() {
             navigate('/login'); // Redirect to login if not logged in
         } else {
             // Fetch saved flights and hotels
-            axios.get(`http://3.128.170.201/savedflights/${userId}`, {
+            axios.get(`http://www.a2bapp.xyz/savedflights/${userId}`, {
                 headers: { 'Authorization': token }
             })
             .then(response => {
@@ -47,7 +47,7 @@ function Profile() {
                 console.error('Error fetching flights:', error);
             });
 
-            axios.get(`http://3.128.170.201/savedhotels/${userId}`, {
+            axios.get(`http://www.a2bapp.xyz/savedhotels/${userId}`, {
                 headers: { 'Authorization': token }
             })
             .then(response => {
@@ -63,7 +63,7 @@ function Profile() {
     const handleDeleteFlight = async (flightId) => {
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://3.128.170.201/deleteflight/${flightId}`, {
+            await axios.delete(`http://www.a2bapp.xyz/deleteflight/${flightId}`, {
                 headers: { 'Authorization': token }
             });
             setFlights(flights.filter(flight => flight.flight_id !== flightId));
@@ -75,7 +75,7 @@ function Profile() {
     const handleDeleteHotel = async (hotelId) => {
         const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://3.128.170.201/deletehotel/${hotelId}`, {
+            await axios.delete(`http://www.a2bapp.xyz/deletehotel/${hotelId}`, {
                 headers: { 'Authorization': token }
             });
             setHotels(hotels.filter(hotel => hotel.hotel_id !== hotelId));
@@ -111,7 +111,7 @@ function Profile() {
         if (document.getElementById('flightBookingForm').checkValidity()) {
             const token = localStorage.getItem('token');
     
-            axios.post('http://3.128.170.201/bookflight', bookingDetails, {
+            axios.post('http://www.a2bapp.xyz/bookflight', bookingDetails, {
             headers: {
                 Authorization: token,
             },
@@ -159,7 +159,7 @@ function Profile() {
         if (document.getElementById('hotelBookingForm').checkValidity()) {
             const token = localStorage.getItem('token');
     
-            axios.post('http://3.128.170.201/bookhotel', bookingDetails, {
+            axios.post('http://www.a2bapp.xyz/bookhotel', bookingDetails, {
             headers: {
                 Authorization: token,
             },

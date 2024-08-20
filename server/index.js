@@ -10,7 +10,7 @@ const path = require('path');
 
 
 const corsOptions = {
-    origin: 'http://3.128.170.201', 
+    origin: 'http://www.a2bapp.xyz', 
     optionsSuccessStatus: 200,
 };
 

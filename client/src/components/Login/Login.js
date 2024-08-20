@@ -17,7 +17,7 @@ export default function Login({ setAuth }) {
         const { Email, Password } = event.target.elements;
 
         try {
-            const response = await axios.post(`http://3.128.170.201/login`, {
+            const response = await axios.post(`http://www.a2bapp.xyz/login`, {
                 Email: Email.value,
                 Password: Password.value
             });

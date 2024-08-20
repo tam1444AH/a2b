@@ -39,7 +39,7 @@ function HotelCard({ hotel }) {
         };
 
         if (userId && token) {
-            axios.post(`http://3.128.170.201/savedhotels`, savedHotel, {
+            axios.post(`http://www.a2bapp.xyz/savedhotels`, savedHotel, {
                 headers: { 'Authorization': token }
             })
             .then(response => {
@@ -100,7 +100,7 @@ function HotelCard({ hotel }) {
         
 
         if (document.getElementById('hotelBookingForm').checkValidity()) {
-            axios.post('http://3.128.170.201/bookhotel', bookingDetails, {
+            axios.post('http://www.a2bapp.xyz/bookhotel', bookingDetails, {
                 headers: { Authorization: token },
             })
             .then((response) => {
