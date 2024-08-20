@@ -4,7 +4,7 @@ A web application where users can search for flights and hotels. They can also b
 
 # Accessing the website
 
-The A2B travel app can be accessed via the [A2B Website](http://3.128.170.201/)
+The A2B travel app can be accessed via the link: [http://www.a2bapp.xyz/](http://www.a2bapp.xyz/)
 
 # Usage Instructions
 
