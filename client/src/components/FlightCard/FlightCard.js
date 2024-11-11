@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
+import { flights } from "../../flights";
 
 
 function FlightCard({flight}) {

@@ -5,18 +5,19 @@ import Form from 'react-bootstrap/Form';
 import FlightCard from '../FlightCard/FlightCard.js';
 import axios from 'axios';
 import { IoCloudOutline } from 'react-icons/io5';
+import { flights } from "../../flights";
+
 
 function Homepage() {
   const [flightsFound, setFlightsFound] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
-  // const userId = localStorage.getItem('userId');
-  // const token = localStorage.getItem('token');
+  
 
 
   const handleSubmit = async (event) => {
+    // console.log('Hello?')
     event.preventDefault();
     const form = event.target;
     const departureIATA = form['departureIATA'].value;
@@ -51,53 +52,78 @@ function Homepage() {
     }, 5000);
   };
 
+
   return (
     <>
       <div className='outer'>
-        <div className='form-container'>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <legend>Enter the following:</legend>
+        
+        <Form onSubmit={handleSubmit} class='w-25 p-3' className='form-container-home'>
+          <div class='text-center'>
+            <Form.Group class="mb-1">
+              <p class='fs-4 text-white'>Enter the following:</p>
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group class="row mb-3">
               <Form.Control type="text" placeholder="IATA code of airport of departure" name='departureIATA' required />
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group class="row mb-4">
               <Form.Control type="text" placeholder="IATA code of airport of arrival" name='arrivalIATA' required />
-            </Form.Group>
-            <Button variant="primary" type="submit" id='submit-button'>
+            </Form.Group>         
+            <Button type='submit' className='btn btn-danger'>
               Search for flights
             </Button>
-          </Form>
-        </div>
-      </div>
-
-      <div className='form-message'>
-        {errorMessage && (
-          <div className='error-container'>
-            <h5 className='error-message'>{errorMessage}</h5>
           </div>
-        )}
-        {showSuccessMessage && flightsFound.length > 0 && (
-          <h5 className='message'>{flightsFound.length} flights found.</h5>
-        )}
-      </div>
+        </Form>
 
-      <div className='flightsOuterContainer'>
-        <div className='flightsInnerContainer'>
-          <div className='flightsList'>
-            {flightsFound.length === 0 ? (
-              <div className='no-flights'>
-                <IoCloudOutline className='cloud-icon' />
-                <p>Enter the IATA codes of your trip to search for flights</p>
-              </div>
-            ) : (
-              flightsFound.map(flight => (
-                <FlightCard key={flight.flight.number} flight={flight} />
-              ))
-            )}
+        <div className='flights-box'>
+
+          {/* <div className='no-flights'>
+            <IoCloudOutline className='cloud-icon' />
+            <p>Search for flights.</p>
+          </div> */}
+          
+          <div className='flights-list'>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
+            <FlightCard flight={flights[0]}/>
           </div>
         </div>
+
+        
+      
+
+        {/* <div className='form-message'>
+          {errorMessage && (
+            <div className='error-container'>
+              <h5 className='error-message'>{errorMessage}</h5>
+            </div>
+          )}
+          {showSuccessMessage && flightsFound.length > 0 && (
+            <h5 className='message'>{flightsFound.length} flights found.</h5>
+          )}
+        </div> */}
+
+        {/* <div className='flightsOuterContainer'>
+          <div className='flightsInnerContainer'>
+            <div className='flightsList'>
+              {flightsFound.length === 0 ? (
+                <div className='no-flights'>
+                  <IoCloudOutline className='cloud-icon' />
+                  <p>Enter the IATA codes of your trip to search for flights</p>
+                </div>
+              ) : (
+                flightsFound.map(flight => (
+                  <FlightCard key={flight.flight.number} flight={flight} />
+                ))
+              )}
+            </div>
+          </div>
+        </div> */}
       </div>
     </>
   );
