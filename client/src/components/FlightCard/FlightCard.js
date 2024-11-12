@@ -10,6 +10,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import { flights } from "../../flights";
+import { BiCalendar } from 'react-icons/bi'
 
 
 function FlightCard({flight}) {
@@ -148,7 +149,40 @@ function FlightCard({flight}) {
 
   return (
     <>
-      <Card className='mb-3 flight-card' text='light' border='dark'>
+      <div class="card text-center text-bg-dark mb-3">
+        <div class="card-header">
+          <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">{flight.flight_status}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">{flight.airline.name} {flight.flight.number}</h3>
+          <p className="card-text d-flex align-items-center justify-content-center">
+            {new Date(flight.departure.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+
+            <span className="divider mx-2"></span>
+
+            {new Date(flight.arrival.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+
+            <br/>
+          </p>
+          <a href="#" class="btn btn-primary">Book this flight</a>
+        </div>
+      </div>
+
+    </>
+  );
+}
+
+export default FlightCard;
+
+{/*  */}
+{/* <Card className='mb-3 flight-card' text='light' border='dark'>
         <Card.Header as="h3" className='header'><center>{flight.airline.name} - {flight.flight.number}</center></Card.Header>
         <Card.Body className='body'>
           <div className='flight-info'>
@@ -253,9 +287,4 @@ function FlightCard({flight}) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-      </Card>
-    </>
-  );
-}
-
-export default FlightCard;
+      </Card> */}

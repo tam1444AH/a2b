@@ -60,7 +60,7 @@ function Homepage() {
         <Form onSubmit={handleSubmit} class='w-25 p-3' className='form-container-home'>
           <div class='text-center'>
             <Form.Group class="mb-1">
-              <p class='fs-4 text-white'>Enter the following:</p>
+              <p class='fs-4 text-white fw-medium'>Enter the following:</p>
             </Form.Group>
             <Form.Group class="row mb-3">
               <Form.Control type="text" placeholder="IATA code of airport of departure" name='departureIATA' required />
