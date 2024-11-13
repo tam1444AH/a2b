@@ -83,13 +83,30 @@ function Homepage() {
             <p>Search for flights.</p>
           </div> */}
           
-          <div className='flights-list'>
-            {flightsFound.map(flight => (
-              
-                <FlightCard flight={flight} />
-              
-            ))}
+          {/* <div className='flights-list'>
 
+            <FlightCard flight={flights[0]} />
+            <FlightCard flight={flights[0]} />
+            <FlightCard flight={flights[0]} />
+            <FlightCard flight={flights[0]} />
+
+          </div> */}
+          <div className='flights-list'>
+
+          
+            <Row>
+              {flightsFound.length > 0 ? flightsFound.map((flight, index) => (
+                // <Col xs={12} sm={6} md={4} lg={3} key={index} className="d-flex">
+                //   <FlightCard flight={flight} />
+                // </Col>
+                <FlightCard flight={flight} />
+              )) : (
+                <div className='no-flights'>
+                  <IoCloudOutline className='cloud-icon' />
+                  <p>Search for flights.</p>
+                </div>
+              )}
+            </Row>
           </div>
 
         </div>

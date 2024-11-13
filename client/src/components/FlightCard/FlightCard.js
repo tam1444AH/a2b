@@ -154,7 +154,7 @@ function FlightCard({flight}) {
           <Card.Body>
             <div className="d-flex justify-content-between align-items-center">
               <h3 className="flight-time">{new Date(flight.departure.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h3>
-              <IoAirplaneSharp className="plane-icon text-danger" size={24} />
+              <IoAirplaneSharp className="plane-icon text-danger"/>
               <h3 className="flight-time">{new Date(flight.arrival.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h3>
             </div>
             <div className="d-flex justify-content-between align-items-center flight-route">

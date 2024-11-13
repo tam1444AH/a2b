@@ -1,47 +1,51 @@
 .flight-card {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    transition: box-shadow 0.3s ease;
-  }
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
   
-  .flight-card:hover {
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-  }
-  
-  .flight-time {
-    font-size: 1.5rem;
-    color: #000;
-  }
-  
-  .iata-code {
-    font-size: 1rem;
-    color: #000000;
-  }
-  
-  .time-line {
-    flex: 1;
-    height: 1px;
-    background-color: #000;
-    margin: 0 8px;
-  }
-  
-  .plane-icon {
-    color: #dc3545;
-  }
-  
-  .badge {
-    font-size: 1rem;
-    font-weight: 500;
-  }
-  
-  .flight-route {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem 0;
-  }
-  
-  .flight-card .card-footer .btn {
-    width: 45%;
-  }
+.flight-card:hover {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.flight-time {
+  font-size: 1.5rem;
+  color: #000;
+}
+
+.iata-code {
+  font-size: 1rem;
+  color: #000000;
+}
+
+.time-line {
+  flex: 1;
+  height: 1px;
+  background-color: #000;
+  margin: 0 8px;
+}
+
+.plane-icon {
+  color: #dc3545;
+  font-size: 2rem;
+}
+
+.badge {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.flight-route {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.flight-card .card-footer .btn {
+  width: 45%;
+}
