@@ -149,142 +149,37 @@ function FlightCard({flight}) {
 
   return (
     <>
-      <div class="card text-center text-bg-dark mb-3">
-        <div class="card-header">
-          <ul class="nav nav-pills card-header-pills">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">{flight.flight_status}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <h3 class="card-title">{flight.airline.name} {flight.flight.number}</h3>
-          <p className="card-text d-flex align-items-center justify-content-center">
-            {new Date(flight.departure.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-
-            <span className="divider mx-2"></span>
-
-            {new Date(flight.arrival.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-
-            <br/>
-          </p>
-          <a href="#" class="btn btn-primary">Book this flight</a>
-        </div>
+      <div className="col-md-4 mb-4">
+        <Card className="flight-card shadow-sm">
+          <Card.Body>
+            <div className="d-flex justify-content-between align-items-center">
+              <h3 className="flight-time">{new Date(flight.departure.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h3>
+              <IoAirplaneSharp className="plane-icon text-danger" size={24} />
+              <h3 className="flight-time">{new Date(flight.arrival.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</h3>
+            </div>
+            <div className="d-flex justify-content-between align-items-center flight-route">
+              <span className="iata-code fw-normal">{flight.departure.iata}</span>
+              <div className="time-line"></div>
+              <span className="iata-code fw-normal">{flight.arrival.iata}</span>
+            </div>
+            <Card.Text className="text-center mt-3 mb-2 fs-4">
+              <strong>{flight.airline.name} {flight.flight.number}</strong>
+            </Card.Text>
+            <div className="d-flex justify-content-between">
+              <span className="badge bg-dark text-white">{flight.flight_status}</span>
+              <span className="badge bg-dark text-white">{flight.flight_date}</span>
+            </div>
+          </Card.Body>
+          <Card.Footer className="d-flex justify-content-between">
+            <Button variant={isSaved ? "secondary" : "danger"} size="sm" onClick={handleSave}>
+              {isSaved ? "Saved" : "Save Flight"}
+            </Button>
+            <Button variant="danger" size="sm">Book Flight</Button>
+          </Card.Footer>
+        </Card>
       </div>
-
     </>
   );
 }
 
 export default FlightCard;
-
-{/*  */}
-{/* <Card className='mb-3 flight-card' text='light' border='dark'>
-        <Card.Header as="h3" className='header'><center>{flight.airline.name} - {flight.flight.number}</center></Card.Header>
-        <Card.Body className='body'>
-          <div className='flight-info'>
-              <div className='flight-section'>
-                <Card.Title>A</Card.Title>
-                <Card.Text>
-                  Departure: {flight.departure.airport} ({flight.departure.iata}),<br/>
-                  {departureCity}, {departureCountry}, <br/>
-                  Departure Time: {flight.departure.scheduled}
-                </Card.Text>
-              </div>
-
-              <div>
-                Date: {flight.flight_date} <IoAirplaneSharp className='plane-icon'/> Status: {flight.flight_status} <br/>
-                <center><p className="small-text">(local airport times in 24hr time)</p></center>
-              </div>
-
-              <div className='flight-section right-section'>
-                <Card.Title>B</Card.Title>
-                <Card.Text>
-                  Arrival: {flight.arrival.airport} ({flight.arrival.iata}), <br/>
-                  {arrivalCity}, {arrivalCountry}, <br/>
-                  Arrival Time: {flight.arrival.scheduled}
-                </Card.Text>
-              </div>
-              
-          </div>
-          <br/>
-          <div className='button-container'>
-            <Button 
-              variant="primary" 
-              className='button left-button' 
-              onClick={handleSave}
-              disabled={isSaving || isSaved}
-            >
-              {isSaving ? 'Saving...' : isSaved ? 'Flight Saved' : 'Save this flight'}
-            </Button>
-            <Button 
-              variant="primary" 
-              className='button right-button' 
-              onClick={handleBookClick}
-              disabled={isBooking || isBooked}
-            >
-              {isBooking ? 'Booking...' : isBooked ? 'Flight Booked' : 'Book a flight'}
-            </Button>
-          </div>
-        </Card.Body>
-
-        <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Book Flight</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form id="flightBookingForm" className="modal-form">
-                        <Form.Group controlId="formTickets">
-                            <Form.Label>Number of Tickets ($100 dollar per ticket)</Form.Label>
-                            <Form.Control
-                                type="number"
-                                value={numTickets}
-                                onChange={(e) => setNumTickets(e.target.value)}
-                                min="1"
-                                max="10"
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formCardInfo" className="mt-3">
-                            <Form.Label>Card Number:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Card Number"
-                                value={cardInfo}
-                                onChange={(e) => setCardInfo(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formCardExpDate" className="mt-3">
-                            <Form.Label>Expiration Date:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="MM/YY"
-                                value={cardExpDate}
-                                onChange={(e) => setCardExpDate(e.target.value)}
-                                pattern="^(0[1-9]|1[0-2])\/?([0-9]{2})$"
-                                title="Please enter a valid expiration date in MM/YY format."
-                                required
-                            />
-                        </Form.Group>
-
-                        <div className="mt-3">
-                            <p>Total Cost: ${numTickets * 100}</p>
-                        </div>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleBookFlight}>
-                        Book Now
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-      </Card> */}

@@ -6,6 +6,7 @@ import FlightCard from '../FlightCard/FlightCard.js';
 import axios from 'axios';
 import { IoCloudOutline } from 'react-icons/io5';
 import { flights } from "../../flights";
+import {Row, Col} from 'react-bootstrap'
 
 
 function Homepage() {
@@ -14,42 +15,43 @@ function Homepage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   
-
+  
 
   const handleSubmit = async (event) => {
-    // console.log('Hello?')
     event.preventDefault();
-    const form = event.target;
-    const departureIATA = form['departureIATA'].value;
-    const arrivalIATA = form['arrivalIATA'].value;
+    setFlightsFound(flights);
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const departureIATA = form['departureIATA'].value;
+  //   const arrivalIATA = form['arrivalIATA'].value;
 
-    setSubmitted(true);
+  //   setSubmitted(true);
 
-    if (departureIATA.length !== 3 || arrivalIATA.length !== 3) {
-      showErrorMessage('Invalid IATA code. Please enter a valid 3-letter IATA code.');
-      return;
-    }
+  //   if (departureIATA.length !== 3 || arrivalIATA.length !== 3) {
+  //     showErrorMessage('Invalid IATA code. Please enter a valid 3-letter IATA code.');
+  //     return;
+  //   }
 
-    try {
-      const response = await axios.get(`http://www.a2bapp.xyz/flights/${departureIATA}-${arrivalIATA}`);
-      const foundFlights = response.data;
-      setFlightsFound(foundFlights);
-      console.log(foundFlights);
-      setShowSuccessMessage(true);
-    } catch (error) {
-      console.error("Error fetching flights:", error);
-      setFlightsFound([]);
-      showErrorMessage('Error fetching flights. Please try again later.');
-    }
-  };
+  //   try {
+  //     const response = await axios.get(`http://www.a2bapp.xyz/flights/${departureIATA}-${arrivalIATA}`);
+  //     const foundFlights = response.data;
+  //     setFlightsFound(foundFlights);
+  //     console.log(foundFlights);
+  //     setShowSuccessMessage(true);
+  //   } catch (error) {
+  //     console.error("Error fetching flights:", error);
+  //     setFlightsFound([]);
+  //     showErrorMessage('Error fetching flights. Please try again later.');
+  //   }
+  // };
 
-  const showErrorMessage = (message) => {
-    setErrorMessage(message);
-    setShowSuccessMessage(false);
-    setTimeout(() => {
-      setErrorMessage('');
-      setShowSuccessMessage(true);
-    }, 5000);
+  // const showErrorMessage = (message) => {
+  //   setErrorMessage(message);
+  //   setShowSuccessMessage(false);
+  //   setTimeout(() => {
+  //     setErrorMessage('');
+  //     setShowSuccessMessage(true);
+  //   }, 5000);
   };
 
 
@@ -82,16 +84,14 @@ function Homepage() {
           </div> */}
           
           <div className='flights-list'>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
-            <FlightCard flight={flights[0]}/>
+            {flightsFound.map(flight => (
+              
+                <FlightCard flight={flight} />
+              
+            ))}
+
           </div>
+
         </div>
 
         
