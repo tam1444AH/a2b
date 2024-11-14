@@ -42,6 +42,11 @@
     color: white;
     text-align: center;
     font-size: 2rem;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .cloud-icon {
@@ -58,78 +63,11 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-
-
-
-
-/* .form-message {
-    margin-top: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: black;
-    height: 40px;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 50px;   
-    position: relative;
-    color:white;
-}
-
-.error-container, .message {
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-}
-
-.error-message {
-    color: red;
-}
-
-.flightsOuterContainer {
-    width: 100%;
-    margin-top: 0px;
-    height: 579px;
-    background-color: black;
-    border: 20px solid black; 
-    display: flex;
-    position: relative;
-    justify-content: center;
-}
-
-.flightsInnerContainer {
-    justify-self: center;
-    background-color: rgb(63, 63, 63);
-    height: 100%;
-    width: 100%;
-    border-radius: 25px;
-    padding: 10px;
-    position: relative;
-    overflow: hidden;
-}
-
-.flightsList {
-    overflow-y: auto;
-    padding: 20px;
-    background-color: rgb(63, 63, 63);
-    height: 100%;
-    position: relative;
-    border-radius: 15px;
-}
-
-.no-flights {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    color: white;
 }
 
-.cloud-icon {
-    font-size: 3rem; 
-    margin-bottom: 10px;
-} */
+
+
+
+

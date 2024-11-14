@@ -162,7 +162,7 @@ function FlightCard({flight}) {
               <div className="time-line"></div>
               <span className="iata-code fw-normal">{flight.arrival.iata}</span>
             </div>
-            <Card.Text className="text-center mt-3 mb-2 fs-4">
+            <Card.Text className="text-center mt-3 mb-2 flight-name">
               <strong>{flight.airline.name} {flight.flight.number}</strong>
             </Card.Text>
             <div className="d-flex justify-content-between">

@@ -77,29 +77,10 @@ function Homepage() {
         </Form>
 
         <div className='flights-box'>
-
-          {/* <div className='no-flights'>
-            <IoCloudOutline className='cloud-icon' />
-            <p>Search for flights.</p>
-          </div> */}
-          
-          {/* <div className='flights-list'>
-
-            <FlightCard flight={flights[0]} />
-            <FlightCard flight={flights[0]} />
-            <FlightCard flight={flights[0]} />
-            <FlightCard flight={flights[0]} />
-
-          </div> */}
           <div className='flights-list'>
-
-          
             <Row>
               {flightsFound.length > 0 ? flightsFound.map((flight, index) => (
-                // <Col xs={12} sm={6} md={4} lg={3} key={index} className="d-flex">
-                //   <FlightCard flight={flight} />
-                // </Col>
-                <FlightCard flight={flight} />
+                <FlightCard flight={flight} key={index}/>
               )) : (
                 <div className='no-flights'>
                   <IoCloudOutline className='cloud-icon' />
@@ -108,39 +89,8 @@ function Homepage() {
               )}
             </Row>
           </div>
-
         </div>
-
         
-      
-
-        {/* <div className='form-message'>
-          {errorMessage && (
-            <div className='error-container'>
-              <h5 className='error-message'>{errorMessage}</h5>
-            </div>
-          )}
-          {showSuccessMessage && flightsFound.length > 0 && (
-            <h5 className='message'>{flightsFound.length} flights found.</h5>
-          )}
-        </div> */}
-
-        {/* <div className='flightsOuterContainer'>
-          <div className='flightsInnerContainer'>
-            <div className='flightsList'>
-              {flightsFound.length === 0 ? (
-                <div className='no-flights'>
-                  <IoCloudOutline className='cloud-icon' />
-                  <p>Enter the IATA codes of your trip to search for flights</p>
-                </div>
-              ) : (
-                flightsFound.map(flight => (
-                  <FlightCard key={flight.flight.number} flight={flight} />
-                ))
-              )}
-            </div>
-          </div>
-        </div> */}
       </div>
     </>
   );

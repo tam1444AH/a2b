@@ -48,4 +48,42 @@
 
 .flight-card .card-footer .btn {
   width: 45%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.flight-name {
+  font-size: 1.5rem;
+}
+
+@media (max-width: 1056px) {
+  .flight-time {
+    font-size: 1.2rem;
+  }
+
+  .iata-code {
+    font-size: 0.9rem;
+  }
+
+  .badge {
+    font-size: 0.8rem;
+  }
+
+  .flight-card {
+    padding: 10px;
+  }
+
+  .flight-name {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 930px) {
+  .flight-time, .iata-code, .badge {
+    font-size: 0.75rem;
+  }
+  .flight-name {
+    font-size: .75rem;
+  }
 }
