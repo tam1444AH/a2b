@@ -77,13 +77,63 @@
   .flight-name {
     font-size: 1rem;
   }
+
+  .plane-icon {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 930px) {
-  .flight-time, .iata-code, .badge {
-    font-size: 0.75rem;
+  .flight-time, .iata-code {
+    font-size: .9rem;
   }
   .flight-name {
-    font-size: .75rem;
+    font-size: .8rem;
+  }
+  .badge {
+    font-size: .7rem;
+  }
+  .plane-icon {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .plane-icon {
+    font-size: 2rem;
+  }
+
+  .flight-time {
+    font-size: 1.2rem;
+    color: #000;
+  }
+  
+  .iata-code {
+    font-size: 1rem;
+    color: #000000;
+  }
+
+  .badge {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .flight-name {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .flight-time, .iata-code {
+    font-size: 1rem;
+  }
+  .badge {
+    font-size: .9rem;
+  }
+  .flight-name {
+    font-size: 1rem;
+  }
+  .plane-icon {
+    font-size: 1.5rem;
   }
 }
